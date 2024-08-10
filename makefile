@@ -1,15 +1,20 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+NAME = push_swap
+FLAGS = -Wall -Wextra -Werror -g
+SRC =	commands.c printf.c stacks.c push_swap.c frees.c utils.c utils_two.c
 
-all: test_operations test_push_swap
+OBJECTS_SRC = $(SRC:.c=.o)
 
-test_operations: test_operations.c operations.c
-	$(CC) $(CFLAGS) -o test_operations test_operations.c operations.c
-	./test_operations
+.PHONY: all clean fclean re 
 
-test_push_swap: test_push_swap.c push_swap.c
-	$(CC) $(CFLAGS) -o test_push_swap test_push_swap.c test_push_swappush_swap.c
-	./test_push_swap
+all: $(NAME)
+
+$(NAME): $(OBJECTS_SRC)
+	cc $(FLAGS) $(SRC) -o $(NAME)
 
 clean:
-	rm -f test_operations test_push_swap
+	rm -f $(OBJECTS_SRC)
+
+fclean:
+	rm -f $(NAME)
+
+re: fclean all

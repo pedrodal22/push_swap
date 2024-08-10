@@ -1,30 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   printf.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfranco- <pfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/27 22:08:00 by pfranco-          #+#    #+#             */
+/*   Updated: 2024/08/10 01:33:06 by pfranco-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
-
-int     ft_atoi(const char *str)
-{
-        int     a;
-        int     simb;
-        int     result;
-
-        a = 0;
-        result = 0;
-        simb = 1;
-        while (str[a] == 32 || (str[a] <= 13 && str[a] >= 9))
-                a++;
-        if (str[a] == '-')
-        {
-                simb *= -1;
-                a++;
-        }
-        else if (str[a] == '+')
-                a++;
-        while ((str[a] >= '0' && str[a] <= '9'))
-        {
-                result = result * 10 + (str[a] - '0');
-                a++;
-        }
-        return (result * simb);
-}
 
 int	ft_putchar(char c)
 {

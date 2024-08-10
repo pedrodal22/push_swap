@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   commands.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfranco- <pfranco-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/27 21:04:09 by pfranco-          #+#    #+#             */
+/*   Updated: 2024/08/10 18:21:22 by pfranco-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-int numero_nodes(node **stackA)
+int	numero_nodes(t_node **stackA)
 {
-	int i;
-	node *current;
+	int		i;
+	t_node	*current;
 
 	i = 0;
 	current = *stackA;
@@ -12,78 +24,64 @@ int numero_nodes(node **stackA)
 		i++;
 		current = current->next;
 	}
-	return(i);
+	return (i);
 }
 
-int check_order(node **stackA, int i_nodes)
+int	check_order(t_node **stackA)
 {
-	node *current;
-	node *current_next;
+	t_node	*current;
 
+	if (stackA == NULL || *stackA == NULL)
+		return (0);
 	current = *stackA;
-	current_next = current->next;
-	while(current_next->next != NULL)
+	while (current->next != NULL)
 	{
-		current_next = current->next;
-		if(current->indice_objetivo < current_next->indice_objetivo)
-		{
-			current = current->next;
-			current_next = current_next->next;
-		}
-		else
-			return(1);
+		if (current->indice_objtv > current->next->indice_objtv)
+			return (1);
+		current = current->next;
 	}
 	return (0);
 }
 
-void comparasion(node **stackA, node **stackB)
+void	push_two(t_node **fonte, t_node **destino, int i)
 {
-    unsigned int mask;
-	int i_nodes;
-	int i;
-	node *current;
-	node *last;
-	int counter;
+	push(fonte, destino);
+	if (i == 1)
+		ft_printf("pb\n");
+	else
+		ft_printf("pa\n");
+}
+
+void	rotate_two(t_node **stackA)
+{
+	rotate(stackA);
+	ft_printf("ra\n");
+}
+
+int	comparison(t_node **stackA, t_node **stackB)
+{
+	int				mask;
+	int				i_nodes;
+	int				i;
 
 	mask = 1;
 	i_nodes = numero_nodes(stackA);
-	current = *stackA;
-	counter = 0;
-
-	while(mask != 0)
+	while (mask != 0)
 	{
-		current = *stackA;
 		i = 0;
-		while(i < i_nodes)
+		if (check_order(stackA) == 0)
+			return (1);
+		while (i < i_nodes)
 		{
-			if ((current->indice_objetivo & mask) == 0)
-			{
-				push(stackA, stackB);
-				counter++;
-				ft_printf("pa\n");
-			}
+			if (((*stackA)->indice_objtv & mask) == 0)
+				push_two(stackA, stackB, 1);
 			else
-			{
-				rotate(stackA);
-				counter++;
-				ft_printf("ra\n");
-			}
-			current = *stackA;
-		/* 	printf("\n");
-			printf("StackA:\n");
-			print_stack(*stackA);
-			printf("StackB:\n");
-			print_stack(*stackB); */
+				rotate_two(stackA);
 			i++;
 		}
-		while(*stackB != NULL)
-		{
-			push(stackB, stackA);
-			printf("pb\n");
-			counter++;
-		}
+		while (*stackB != NULL)
+			push_two(stackB, stackA, 2);
 		mask <<= 1;
 	}
-	printf("\n");
-	printf("%i\n", counter);
+	return (0);
 }
